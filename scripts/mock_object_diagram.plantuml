@@ -1,0 +1,65 @@
+@startuml "Diagrama de Objetos"
+object "Contribuição 1 : CONTRIBUTION" as CONTRIBUTION_V1 {
+uid = {CONTRIBUTION1_ID}
+}
+
+object "Versão 1 : PERSON" as DATA_V1 {
+}
+
+object "Metadados da versão 1 : ORIGINAL_VERSION<PARTY>" as METADATA_V1 {
+uid = {PERSON_ID}::{SYSTEM_ID}::1
+contribution = {CONTRIBUTION1_ID}
+}
+
+object "Detalhes 1 : AUDIT_DETAILS" as AUDIT_DETAILS_V1 {
+committer = {USER}
+}
+
+
+
+object "Contribuição 2 : CONTRIBUTION" as CONTRIBUTION_V2 {
+uid = {CONTRIBUTION2_ID}
+}
+
+
+object "Versão 2 : PERSON" as DATA_V2 {
+}
+
+object "Metadados da versão 2 : ORIGINAL_VERSION<PARTY>" as METADATA_V2 {
+uid = {PERSON_ID}::{SYSTEM_ID}::2
+preceding_version_uid = {PERSON_ID}::{SYSTEM_ID}::1
+contribution = {CONTRIBUTION2_ID}
+}
+
+object "Detalhes 2 : AUDIT_DETAILS" as AUDIT_DETAILS_V2 {
+committer = {USER}
+}
+
+object "Objeto versionado : VERSIONED_PARTY" as VERSIONED_PARTY {
+uid = {PERSON_ID}
+}
+
+
+
+DATA_V1 -* METADATA_V1
+
+METADATA_V1 - CONTRIBUTION_V1
+
+AUDIT_DETAILS_V1 --*  METADATA_V1 
+
+
+DATA_V2 -* METADATA_V2
+
+METADATA_V2 - CONTRIBUTION_V2 
+
+METADATA_V2 *-- AUDIT_DETAILS_V2
+
+
+
+METADATA_V1 --- METADATA_V2
+
+
+
+VERSIONED_PARTY ..... METADATA_V1
+VERSIONED_PARTY ..... METADATA_V2
+@enduml
